@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcl.blog.dao.ArticleDao">
+    <resultMap id="article" type="com.hcl.blog.entity.Article">
+        <id property="id" column="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="title" column="title"/>
+        <result property="firstPic" column="first_pic"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <select id="findArticles" resultType="com.hcl.blog.entity.Article">
+        select * from article
+        order by create_time desc
+    </select>
+
+    <select id="countArticles" resultType="java.lang.Long">
+        select count(*) from article
+    </select>
+
+    <select id="findArticleById" resultType="com.hcl.blog.entity.Article">
+        select * from article
+        where id = #{id}
+    </select>
+
+    <insert id="newArticle">
+        insert into article(title, status, create_time, first_pic, content, content_text, content_html, description, type, like_num)
+        values (#{title}, #{status}, #{createTime}, #{firstPic}, #{content}, #{contentText},#{htmlContent}, #{description}, #{type}, 0)
+    </insert>
+
+    <delete id="deleteArticle">
+        delete from article where id = #{id}
+    </delete>
+
+    <select id="findAllArticleType" resultType="String">
+        select type from article
+    </select>
+
+    <select id="countLikeNum" resultType="java.lang.Integer">
+        select count(*) from like_article where article_id = #{articleId}
+    </select>
+
+    <select id="getLikeInfoByArticleId" resultType="com.hcl.blog.entity.Like">
+        select * from like_article where article_id = #{articleId}
+    </select>
+
+    <update id="updateLikeNum">
+        update article set like_num = like_num +  #{status} where id = #{articleId}
+    </update>
+
+</mapper>

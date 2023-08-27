@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>归档</title>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="author" content="chenluh">
+  <meta name="site" content="https://dhjdd.cn/">
+  <meta property="og:keywords">
+  <meta property="og:description">
+  <meta property="og:site_name" content="chenluh">
+  <meta property="og:url" content="https://dhjdd.cn/">
+  <meta property="og:title" content="chenluh">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dhjdd.cn/file/logo_1637031064675.png">
+  <link rel="canonical" href="https://dhjdd.cn/">
+  <script id="base-script">
+    window.ThemeVersion = "2.0.5";
+    const locDataTheme = localStorage.getItem('Butterfly-data-theme');
+    if (locDataTheme) {
+      document.querySelector('html').setAttribute('data-theme', locDataTheme);
+      window.dataTheme = locDataTheme;
+    } else {
+      window.dataTheme = document.querySelector('html').getAttribute('data-theme');
+    }
+    document.getElementById('base-script').remove();
+  </script>
+  <style
+    type="text/css"
+  >
+    html {
+      --theme: #49b1f5;
+      --body-bg: linear-gradient(90deg, rgba(247, 149, 51, .1) 0, rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1) 100%);
+      --main-max-width: 1250px;
+      --card-border-radius: 24px;
+      --card-bg-color: rgba(255, 255, 255, 1);
+      --card-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);
+      --cursor-default: url("https://cdn.dhjdd.cn/assets/plugins/cursor/simple/default.cur"), auto;
+      --cursor-pointer: url("https://cdn.dhjdd.cn/assets/plugins/cursor/simple/pointer.cur"), auto;
+    }
+
+    html[data-theme=dark] {
+      --theme: #ff7242;
+      --body-bg: #221f1f;
+    }
+
+    img[data-lazy-src]:not(.loaded,.error) {
+      filter: blur(50px) brightness(1);
+    }
+  </style>
+
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/font/CircularBody.min.css}">
+
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/css/global.min.css}">
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/plugins/fontawesome/fontawesome.min.css}">
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/plugins/animate/animate.min.css}">
+
+  <style>
+    .above {
+      --above-background: url("../file/taejune-kim-falling-1600-gtz.jpg");
+    }
+  </style>
+  <link rel="stylesheet" th:href="@{/css/archives.min.css}">
+
+  <script type="text/javascript" th:src="@{/plugins/echarts/echarts.min.js}"></script>
+
+  <script type="text/javascript">
+    function load() {
+      $.ajax({
+        method: "GET",
+        url: 'http://localhost:8080/blog/alarmChart',
+        dataType: 'json',
+        success: function (data) {
+          var xDataArr = []
+          var yDataArr = []
+          for(var i = 0; i < data.length; i ++ ){
+            xDataArr.push(data[i].time)
+            yDataArr.push(data[i].num)
+          }
+          xDataArr = xDataArr.reverse();
+          yDataArr = yDataArr.reverse();
+          var myChart = echarts.init(document.getElementById('chartContainer'));
+          var option ={
+            title: {
+              text: '文章发布统计',
+              x:'center',
+              y:'top',
+              textAlign:'center'
+            },
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              },
+            },
+            xAxis: {
+              type: 'category',
+              name: '日期',
+              axisLabel :{
+                //显示所有x轴数据
+                interval:0,
+                // //倾斜显示
+                // rotate:-40,
+                //x轴最后一位也显示
+                showMaxLabel: true
+              },
+              data: xDataArr
+            },
+            yAxis: {
+              name: '文章篇数',
+              type: 'value',
+              minInterval: 1
+            },
+            series: [{
+              name: '文章篇数',
+              data: yDataArr,
+              type: 'line',
+              smooth: true,
+              label: {
+                normal: {
+                  show: true
+                }
+              },
+              areaStyle: { // 渐变阴影
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: "#8B9BFA" },
+                    { offset: 1, color: "#FBFBFF" },
+                  ])
+                }
+              },
+            }]
+          }
+          myChart.setOption(option,true);
+        },
+        error: function (error) {
+          // 处理错误
+          alert("error!");
+          console.log(error)
+        }
+      })
+    }
+  </script>
+
+
+  <link rel="stylesheet" th:href="@{/plugins/Qmsg/Qmsg.min.css}">
+  <!-- PluginSearchWidget start -->
+  <script th:src="@{/plugins/PluginSearchWidget/assets/static/search-widget.iife.js}"></script>
+  <!-- PluginSearchWidget end -->
+  <link rel="icon" href="https://dhjdd.cn/file/logo_1637031064675.png" />
+</head>
+<body onload="load()">
+<div id="Butterfly" class="archives">
+  
+  <header class="header relative w-100">
+    <nav class="nav flex flex-wrap flex-align-items-center  top-0 absolute z-80 w-100">
+      <a class="site-title flex-1" href="/">chenluh</a>
+
+      <ul class="menu inline">
+        
+        <li class="menu-item search">
+          <a class="menu-link relative inline-block" href="javascript:SearchWidget.open();">
+            <i class="fas fa-search fa-fw"></i>
+            <span class="menu-name">搜索</span>
+          </a>
+        </li>
+        <li class="menu-item toggle">
+        <span class="menu-link relative inline-block">
+          <i class="fas fa-bars fa-fw"></i>
+        </span>
+        </li>
+        
+
+        
+          <li class="menu-item menu-pc">
+            <a class="menu-link relative inline-block" href="/"
+               target="SELF" data-pjax>
+              <i class="fa-home fa-solid fa-bolt-auto"></i>
+              <span class="menu-name">首页</span>
+            </a>
+          </li>
+
+          
+
+        
+          
+
+          <li class="menu-item menu-pc relative">
+            <div class="menu-link relative">
+              <i class="fa-fw fas fa-compass"></i>
+              <span class="menu-name">目录</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <!--menu-dropdown  -->
+            <ul class="menu-dropdown none absolute right-0 padding-0 w-max-content">
+              <li class="menu-dropdown--item">
+                <a href="/archives" class="menu-dropdown--link w-100 inline-block">
+                  <i class="fa-fw fas fa-archive"></i>
+                  <span class="menu-dropdown-name">文章</span>
+                </a>
+              </li>
+              <li class="menu-dropdown--item">
+                <a href="/categories" class="menu-dropdown--link w-100 inline-block">
+                  <i class="fa-regular fa-folder-open"></i>
+                  <span class="menu-dropdown-name">分类</span>
+                </a>
+              </li>
+              <li class="menu-dropdown--item">
+                <a href="/tags" class="menu-dropdown--link w-100 inline-block">
+                  <i class="fa-solid fa-tags"></i>
+                  <span class="menu-dropdown-name">标签</span>
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+        
+          <li class="menu-item menu-pc">
+            <a class="menu-link relative inline-block" href="/about"
+               target="SELF" data-pjax>
+              <i class="fa-solid fa-id-card"></i>
+              <span class="menu-name">关于</span>
+            </a>
+          </li>
+
+          
+
+        
+      </ul>
+    </nav>
+
+    
+    <div class="sidebar fixed top-0">
+      <div class="sidebar-avatar text-center overflow-hidden">
+        <img class="w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/avatar_1631169702096.png"
+             alt="chenluh" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </div>
+      <div class="sidebar-data w-100 text-center">
+        <a class="item" title="文章" href="/archives">
+          <div class="headline">文章</div>
+          <div class="num text-overflow">22</div>
+        </a>
+        <a class="item" href="/categories" title="分类">
+          <div class="headline">分类</div>
+          <div class="num text-overflow">7</div>
+        </a>
+        <a class="item" title="评论" href="javascript:">
+          <div class="headline">评论</div>
+          <div class="num text-overflow">30</div>
+        </a>
+      </div>
+      <hr>
+      <ul class="sidebar-menus">
+        
+          <li class="menu-item">
+            <a class="menu-link relative block" href="/"
+               target="SELF" data-pjax>
+              <i class="fa-home fa-solid fa-bolt-auto"></i>
+              <span class="menu-name">首页</span>
+            </a>
+          </li>
+
+          
+
+        
+          
+
+          <li class="menu-item relative">
+            <div class="menu-link relative">
+              <i class="fa-fw fas fa-compass"></i>
+              <span class="menu-name">目录</span>
+              <i class="fas fa-chevron-down absolute"></i>
+            </div>
+            <ul class="menu-child none">
+              <li class="menu-child--item">
+                <a href="/archives" class="menu-child--link w-100 block">
+                  <i class="fa-fw fas fa-archive"></i>
+                  <span class="menu-child-name">文章</span>
+                </a>
+              </li>
+              <li class="menu-child--item">
+                <a href="/categories" class="menu-child--link w-100 block">
+                  <i class="fa-regular fa-folder-open"></i>
+                  <span class="menu-child-name">分类</span>
+                </a>
+              </li>
+              <li class="menu-child--item">
+                <a href="/tags" class="menu-child--link w-100 block">
+                  <i class="fa-solid fa-tags"></i>
+                  <span class="menu-child-name">标签</span>
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+        
+          <li class="menu-item">
+            <a class="menu-link relative block" href="/about"
+               target="SELF" data-pjax>
+              <i class="fa-solid fa-id-card"></i>
+              <span class="menu-name">关于</span>
+            </a>
+          </li>
+
+          
+
+        
+      </ul>
+    </div>
+
+    <section class="above relative w-100">
+      <h1 class="absolute above-public-title font-weight-400 margin-0 left-0 right-0 text-center">归档</h1>
+    </section>
+  </header>
+
+  
+  <main class="main flex animated fadeIn margin-0-auto aside-right"
+  >
+  <section class="container card">
+    
+      <div id="chartContainer" class="archives-chart w-100"></div>
+      <div class="archives-axis-title relative">文章总览 -22</div>
+      <ul class="archives-axis-list" th:each="map:${map}">
+        
+          <li class="archives-axis-list--item relative flex flex-align-items-center year">
+            <span class="name" th:text="${map.getKey()}">2022</span>
+            <!--            <i class="fa-sharp fa-solid fa-rabbit"></i>-->
+          </li>
+          
+
+            <li class="archives-axis-list--item relative flex flex-align-items-center" th:each="article:${map.getValue()}">
+
+              <a class="cover overflow-hidden relative" th:href="@{'displayArticle?id=' + ${article.id}}"
+              >
+                <img class="w-100 h-100"
+                     th:src="${article.firstPic}"
+                     th:alt="${article.title}" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+              </a>
+
+              <div class="info flex-1">
+                发布于 <time th:text="${article.formattedDate}">2022-12-15 17:03</time>
+                <a class="title text-clamp text-cmp2" th:href="@{'displayArticle?id=' + ${article.id}}"><span th:text="${article.title}">Nginx代理阿里云OSS免流</span></a>
+              </div>
+
+            </li>
+
+      </ul>
+      <div class="pagination text-center">
+
+  
+
+  
+
+  
+    <a
+      class="page current inline-flex flex-justify-content-center flex-align-items-center"
+      href="/archives/page/1">1</a><a
+      class="page inline-flex flex-justify-content-center flex-align-items-center"
+      href="/archives/page/2">2</a><a
+      class="page inline-flex flex-justify-content-center flex-align-items-center"
+      href="/archives/page/3">3</a><a
+      class="page inline-flex flex-justify-content-center flex-align-items-center"
+      href="/archives/page/4">4</a><a
+      class="page inline-flex flex-justify-content-center flex-align-items-center"
+      href="/archives/page/5">5</a>
+  
+
+  <a href="/archives/page/2"
+     rel="next"
+     title="下一页"
+     class="next inline-flex flex-justify-content-center flex-align-items-center">
+    <i class="fas fa-chevron-right fa-fw"></i>
+  </a>
+</div>
+    
+
+    
+  </section>
+
+  <aside class="aside w-25"
+>
+  <section class="aside-item aside-user card text-center">
+    <img class="avatar block margin-0-auto overflow-hidden"
+         th:src="@{/assets/images/users/avatar-1.jpg}"
+         alt="chenluh" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+
+    <div class="name font-weight-500">chenluh</div>
+
+    <div class="desc">代码改变生活🎈</div>
+
+    <div class="data w-100">
+      <a class="item" title="文章"th:href="@{archive}">
+        <div class="headline">文章</div>
+        <div class="num text-overflow">22</div>
+      </a>
+      <a class="item" href="/categories" title="分类">
+        <div class="headline">分类</div>
+        <div class="num text-overflow">7</div>
+      </a>
+      <a class="item" title="评论" href="javascript:">
+        <div class="headline">评论</div>
+        <div class="num text-overflow">30</div>
+      </a>
+    </div>
+
+    <a class="button btn-effect block text-center" target="_blank" href="/">关注我</a>
+
+    <div class="icons flex flex-justify-content-center flex-wrap-wrap">
+      <a class="" target="_blank"
+         href="tencent://AddContact/?fromId=50&amp;amp;fromSubId=1&amp;amp;subcmd=all&amp;amp;uin=2654749024"><i class="fa-brands fa-qq"></i></a><a class="" target="_blank"
+         href="https://github.com/dhjddcn"><i class="fa-brands fa-github"></i></a><a class="" target="_blank"
+         href="mailto:dhjddcn@qq.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </section>
+
+  <!--公告-->
+  <section class="aside-item aside-notice card">
+    <h1 class="aside-title">
+      <i class="fas fa-bullhorn fa-shake"></i>
+      <span class="name">公告</span>
+    </h1>
+
+    <div class="content">好博客，一定要 分享出去 呀~</div>
+  </section>
+
+
+  <!--分类-->
+  <section class="aside-item aside-category card">
+    <h1 class="aside-title">
+      <i class="fas fa-folder-open"></i>
+      <span class="name">分类</span>
+    </h1>
+
+    <div class="content">
+      
+        <a href="https://dhjdd.cn/categories/%E5%89%8D%E7%AB%AF"
+           title="前端"
+           class="link flex relative flex-direction-row"
+        >
+          <span class="name text-overflow flex-1">前端</span>
+          <span class="num text-overflow">12</span>
+        </a><a href="https://dhjdd.cn/categories/liunx"
+           title="Liunx"
+           class="link flex relative flex-direction-row"
+        >
+          <span class="name text-overflow flex-1">Liunx</span>
+          <span class="num text-overflow">5</span>
+        </a><a href="https://dhjdd.cn/categories/flutter"
+           title="Flutter"
+           class="link flex relative flex-direction-row"
+        >
+          <span class="name text-overflow flex-1">Flutter</span>
+          <span class="num text-overflow">2</span>
+        </a><a href="https://dhjdd.cn/categories/%E5%90%8E%E7%AB%AF"
+           title="后端"
+           class="link flex relative flex-direction-row"
+        >
+          <span class="name text-overflow flex-1">后端</span>
+          <span class="num text-overflow">1</span>
+        </a><a href="https://dhjdd.cn/categories/book"
+           title="Notebook"
+           class="link flex relative flex-direction-row"
+        >
+          <span class="name text-overflow flex-1">Notebook</span>
+          <span class="num text-overflow">5</span>
+        </a>
+      
+
+      
+    </div>
+
+  </section>
+
+
+  <!--标签-->
+  <section class="aside-item aside-tags card">
+    <h1 class="aside-title">
+      <i class="fas fa-tags"></i>
+      <span class="name">标签</span>
+    </h1>
+
+    <div class="content">
+      
+        <a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/%E5%8E%9F%E5%9E%8B"
+          title="原型"
+        >
+
+          <span class="name">原型</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/sass"
+          title="sass"
+        >
+
+          <span class="name">sass</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/less"
+          title="less"
+        >
+
+          <span class="name">less</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/css%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"
+          title="CSS预处理器"
+        >
+
+          <span class="name">CSS预处理器</span>
+          （<span class="num">2</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/%E9%98%BF%E9%87%8C%E4%BA%91"
+          title="阿里云"
+        >
+
+          <span class="name">阿里云</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/windows"
+          title="windows"
+        >
+
+          <span class="name">windows</span>
+          （<span class="num">4</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/linux"
+          title="linux"
+        >
+
+          <span class="name">linux</span>
+          （<span class="num">4</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/dart"
+          title="dart"
+        >
+
+          <span class="name">dart</span>
+          （<span class="num">2</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/css"
+          title="css"
+        >
+
+          <span class="name">css</span>
+          （<span class="num">3</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/flttuer"
+          title="flttuer"
+        >
+
+          <span class="name">flttuer</span>
+          （<span class="num">2</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7"
+          title="实用工具"
+        >
+
+          <span class="name">实用工具</span>
+          （<span class="num">3</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/webp"
+          title="webp"
+        >
+
+          <span class="name">webp</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"
+          title="文件上传"
+        >
+
+          <span class="name">文件上传</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/java"
+          title="java"
+        >
+
+          <span class="name">java</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/nginx"
+          title="nginx"
+        >
+
+          <span class="name">nginx</span>
+          （<span class="num">3</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/andiond"
+          title="andiond"
+        >
+
+          <span class="name">andiond</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/git"
+          title="git"
+        >
+
+          <span class="name">git</span>
+          （<span class="num">1</span>）
+        </a><a
+          class="link inline-block relative"
+          href="https://dhjdd.cn/tags/oss"
+          title="oss"
+        >
+
+          <span class="name">oss</span>
+          （<span class="num">2</span>）
+        </a>
+      
+      
+    </div>
+  </section>
+
+  <!--广告-->
+<!--  <section th:if="${theme.config.aside.enable_advert}" class="aside-item aside-advert card">-->
+<!--    <h1 class="aside-title">-->
+<!--      <i class="fa-duotone fa-mug-hot"></i>-->
+<!--      <span class="name">广告</span>-->
+<!--    </h1>-->
+
+<!--    <div class="content">-->
+<!-- 111-->
+<!--    </div>-->
+<!--  </section>-->
+
+  <!--网站信息-->
+  <section class="aside-item aside-web-info card">
+    <h1 class="aside-title">
+      <i class="fas fa-chart-line"></i>
+      <span class="name">网站资讯</span>
+    </h1>
+
+    <div class="content">
+      <p class="item flex flex-align-items-center">
+        <span class="name flex-1">文章数目：</span>
+        <span class="text">22 章</span>
+      </p>
+
+      <p class="item flex flex-align-items-center">
+        <span class="name flex-1">运行时间：</span>
+        <span class="text run-day" data-runDay="2021-05-05 00:00">未配置建站时间</span>
+      </p>
+
+      <p class="item flex flex-align-items-center">
+        <span class="name flex-1">本站访客：</span>
+        <span class="text" id="busuanzi_value_site_uv">加载中...</span>&nbsp;人
+      </p>
+
+      <p class="item flex flex-align-items-center">
+        <span class="name flex-1">总访问量：</span>
+        <span class="text" id="busuanzi_value_site_pv">加载中...</span>&nbsp;人
+      </p>
+    </div>
+
+  </section>
+</aside>
+</main>
+  
+  <footer class="footer text-center">
+    <div class="copyright">© 2020 - 2023 By chenluh</div>
+    <div class="icp">
+      <a href="https://beian.miit.gov.cn/?token=0a8070f6-065c-4796-89be-75528400a7a4#/Integrated/index">备案号：蜀ICP备20013557号-2</a>
+    </div>
+    
+    <div>本站点由<img src="https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png" alt="阿里云logo"  style="width: 65px;margin: 0 5px;    transform: translateY(-2px);">云服务商 提供云服务</div>
+    <div class="powered">Powered by&nbsp;<a class="halo" href="https://halo.run/" target="_blank">Halo</a>&nbsp;|&nbsp;🌈
+      Theme by&nbsp;<a class="theme" title="当前主题：Butterfly" href="https://github.com/dhjddcn/halo-theme-butterfly"
+                       target="_blank">chenluh</a></div>
+  </footer>
+  
+  <div class="adsorption z-80 fixed">
+    <button class="show-tocbot btn-effect text-center none" type="button" title="目录">
+      <i class="fas fa-list-ul"></i>
+    </button>
+
+    <button class="switch-model block btn-effect text-center" type="button" title="浅色和深色模式转换">
+      <i class="fas fa-adjust"></i>
+    </button>
+
+    <button class="back-top  block btn-effect text-center" type="button" title="回到顶部">
+      <i class="fa-solid fa-up"></i>
+    </button>
+  </div>
+
+  
+  <div class="global-mask fixed w-100 z-100 h-100 left-0 top-0 none"></div>
+</div>
+<script type="text/javascript" th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/lazyLoad/lazyLoad.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/universe/universe.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/Qmsg/Qmsg.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/global.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/archives.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/plugins/busuanzi/busuanzi.pure.mini.js}"></script>
+</body>
+</html>

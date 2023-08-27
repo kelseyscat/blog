@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${article.title}">Nginx代理阿里云OSS免流</title>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="author" content="小红">
+  <meta name="site" content="https://dhjdd.cn/">
+  <meta property="og:keywords">
+  <meta property="og:description">
+  <meta property="og:site_name" content="小红">
+  <meta property="og:url" content="https://dhjdd.cn/">
+  <meta property="og:title" content="小红">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dhjdd.cn/file/logo_1637031064675.png">
+  <link rel="canonical" href="https://dhjdd.cn/">
+  <script id="base-script">
+    window.ThemeVersion = "2.0.5";
+    const locDataTheme = localStorage.getItem('Butterfly-data-theme');
+    if (locDataTheme) {
+      document.querySelector('html').setAttribute('data-theme', locDataTheme);
+      window.dataTheme = locDataTheme;
+    } else {
+      window.dataTheme = document.querySelector('html').getAttribute('data-theme');
+    }
+    document.getElementById('base-script').remove();
+  </script>
+  <style
+    type="text/css"
+  >
+    html {
+      --theme: #49b1f5;
+      --body-bg: linear-gradient(90deg, rgba(247, 149, 51, .1) 0, rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1) 100%);
+      --main-max-width: 1250px;
+      --card-border-radius: 24px;
+      --card-bg-color: rgba(255, 255, 255, 1);
+      --card-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);
+      --cursor-default: url("https://cdn.dhjdd.cn/assets/plugins/cursor/simple/default.cur"), auto;
+      --cursor-pointer: url("https://cdn.dhjdd.cn/assets/plugins/cursor/simple/pointer.cur"), auto;
+    }
+
+    html[data-theme=dark] {
+      --theme: #ff7242;
+      --body-bg: #221f1f;
+    }
+
+    img[data-lazy-src]:not(.loaded,.error) {
+      filter: blur(50px) brightness(1);
+    }
+
+    /*#heart {*/
+    /*  width: 100px;*/
+    /*  height: 100px;*/
+    /*  background: url(http://localhost:8081/images/20191012183039430.png)no-repeat;*/
+    /*  background-position: left;*/
+    /*  background-size: cover;*/
+    /*  margin: auto;*/
+    /*  !* border: 1px solid black; *!*/
+    /*  !*margin: 200px auto;*!*/
+    /*}*/
+
+    /*#heart:hover {*/
+    /*  background-position: right;*/
+    /*  transition: background .6s steps(28);*/
+    /*}*/
+
+    .thumbsup {
+      width: 100px;
+      height: 100px;
+      background: url(http://rzquhlkjv.bkt.clouddn.com/images/20191012183039430.png)no-repeat;
+      background-position: left;
+      background-size: cover;
+      margin: auto;
+    }
+
+    /*.thumbsup:hover {*/
+    /*  background-position: right;*/
+    /*  transition: background .6s steps(28);*/
+    /*}*/
+
+    .thumbsupNum {
+      color: gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+  </style>
+
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/font/CircularBody.min.css}">
+
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/css/global.min.css}">
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/plugins/fontawesome/fontawesome.min.css}">
+  <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/plugins/animate/animate.min.css}">
+  
+<!--  <style>-->
+<!--    .above {-->
+<!--      &#45;&#45;above-background: url(https://dhjdd.cn/file/oss_1637630302458.png);-->
+<!--    }-->
+<!--  </style>-->
+  
+    <link rel="preload" as="style" onload="this.rel='stylesheet'" th:href="@{/plugins/prism/prism.min.css}">
+    <link rel="preload" as="style" onload="this.rel='stylesheet'"
+          data-code-theme="light"
+          th:href="@{/plugins/prism/themes/prism-one-light.css}">
+    <link rel="preload" as="style" onload="this.rel='stylesheet'"
+          data-code-theme="dark"
+          th:href="@{/plugins/prism/themes/prism-one-dark.css}">
+  
+    <link rel="stylesheet" as="style" th:href="@{/plugins/fancybox/fancybox.min.css}">
+    <link rel="stylesheet" as="style" th:href="@{/css/post.min.css}">
+
+  <link rel="stylesheet" th:href="@{/plugins/Qmsg/Qmsg.min.css}">
+<!-- PluginSearchWidget start -->
+<script th:src="@{/plugins/PluginSearchWidget/assets/static/search-widget.iife.js}"></script>
+<!-- PluginSearchWidget end -->
+<link rel="icon" href="https://dhjdd.cn/file/logo_1637031064675.png" />
+<script async defer src="/halo-tracker.js" data-group="content.halo.run" data-plural="posts" data-name="517"></script>
+</head>
+<body onload="load()"> <!-- onload="load()" -->
+<div id="Butterfly" class="post">
+  
+  <header class="header relative w-100">
+    <nav class="nav flex flex-wrap flex-align-items-center  top-0 absolute z-80 w-100">
+      <a class="site-title flex-1" href="/">小红</a>
+
+      <ul class="menu inline">
+        
+        <li class="menu-item search">
+          <a class="menu-link relative inline-block" href="javascript:SearchWidget.open();">
+            <i class="fas fa-search fa-fw"></i>
+            <span class="menu-name">搜索</span>
+          </a>
+        </li>
+        <li class="menu-item toggle">
+        <span class="menu-link relative inline-block">
+          <i class="fas fa-bars fa-fw"></i>
+        </span>
+        </li>
+        
+
+        
+          <li class="menu-item menu-pc">
+            <a class="menu-link relative inline-block" th:href="@{/}"
+               target="SELF" data-pjax>
+              <i class="fa-home fa-solid fa-bolt-auto"></i>
+              <span class="menu-name">首页</span>
+            </a>
+          </li>
+
+          
+
+        
+          
+
+          <li class="menu-item menu-pc relative">
+            <div class="menu-link relative">
+              <i class="fa-fw fas fa-compass"></i>
+              <span class="menu-name">目录</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <!--menu-dropdown  -->
+            <ul class="menu-dropdown none absolute right-0 padding-0 w-max-content">
+              <li class="menu-dropdown--item">
+                <a href="/archives" class="menu-dropdown--link w-100 inline-block">
+                  <i class="fa-fw fas fa-archive"></i>
+                  <span class="menu-dropdown-name">文章</span>
+                </a>
+              </li>
+              <li class="menu-dropdown--item">
+                <a href="/categories" class="menu-dropdown--link w-100 inline-block">
+                  <i class="fa-regular fa-folder-open"></i>
+                  <span class="menu-dropdown-name">分类</span>
+                </a>
+              </li>
+              <li class="menu-dropdown--item">
+                <a href="/tags" class="menu-dropdown--link w-100 inline-block">
+                  <i class="fa-solid fa-tags"></i>
+                  <span class="menu-dropdown-name">标签</span>
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+        
+          <li class="menu-item menu-pc">
+            <a class="menu-link relative inline-block" href="/about"
+               target="SELF" data-pjax>
+              <i class="fa-solid fa-id-card"></i>
+              <span class="menu-name">关于</span>
+            </a>
+          </li>
+
+          
+
+        
+      </ul>
+    </nav>
+
+    
+    <div class="sidebar fixed top-0">
+      <div class="sidebar-avatar text-center overflow-hidden">
+        <img class="w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/avatar_1631169702096.png"
+             alt="小红" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </div>
+      <div class="sidebar-data w-100 text-center">
+        <a class="item" title="文章" href="/archives">
+          <div class="headline">文章</div>
+          <div class="num text-overflow">22</div>
+        </a>
+        <a class="item" href="/categories" title="分类">
+          <div class="headline">分类</div>
+          <div class="num text-overflow">7</div>
+        </a>
+        <a class="item" title="评论" href="javascript:">
+          <div class="headline">评论</div>
+          <div class="num text-overflow">30</div>
+        </a>
+      </div>
+      <hr>
+      <ul class="sidebar-menus">
+        
+          <li class="menu-item">
+            <a class="menu-link relative block" th:href="@{/}"
+               target="SELF" data-pjax>
+              <i class="fa-home fa-solid fa-bolt-auto"></i>
+              <span class="menu-name">首页</span>
+            </a>
+          </li>
+
+          
+
+        
+          
+
+          <li class="menu-item relative">
+            <div class="menu-link relative">
+              <i class="fa-fw fas fa-compass"></i>
+              <span class="menu-name">目录</span>
+              <i class="fas fa-chevron-down absolute"></i>
+            </div>
+            <ul class="menu-child none">
+              <li class="menu-child--item">
+                <a href="/archives" class="menu-child--link w-100 block">
+                  <i class="fa-fw fas fa-archive"></i>
+                  <span class="menu-child-name">文章</span>
+                </a>
+              </li>
+              <li class="menu-child--item">
+                <a href="/categories" class="menu-child--link w-100 block">
+                  <i class="fa-regular fa-folder-open"></i>
+                  <span class="menu-child-name">分类</span>
+                </a>
+              </li>
+              <li class="menu-child--item">
+                <a href="/tags" class="menu-child--link w-100 block">
+                  <i class="fa-solid fa-tags"></i>
+                  <span class="menu-child-name">标签</span>
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+        
+          <li class="menu-item">
+            <a class="menu-link relative block" href="/about"
+               target="SELF" data-pjax>
+              <i class="fa-solid fa-id-card"></i>
+              <span class="menu-name">关于</span>
+            </a>
+          </li>
+
+          
+
+        
+      </ul>
+    </div>
+
+    <section class="above relative w-100" th:style="'--above-background: url(' + ${article.firstPic} + ')'">
+  <div class="post-info absolute w-100 text-center">
+    <h1 class="post-title font-weight-400 text-clamp text-cmp3" th:text="${article.title}">Nginx代理阿里云OSS免流</h1>
+    <div class="post-meta">
+      <div class="line">
+        <span class="wp publishTime">
+            <i class="fa-solid fa-calendar-days"></i>
+            <time th:text="${article.createTime}">发布于 2021-11-22</time>
+        </span>
+
+        
+
+        <span class="wp category">
+            <span class="fk">|</span>
+            <i class="fas fa-inbox"></i>
+            <span class="cys">
+              
+                <a class="lk" href="https://dhjdd.cn/categories/liunx">Liunx</a>
+               <span class="point">•</span>
+              
+                <a class="lk" href="https://dhjdd.cn/categories/%E5%B7%A5%E5%85%B7">工具</a>
+               <span class="point">•</span>
+              
+            </span>
+          </span>
+
+      </div>
+      <div class="line">
+        <span class="wordCount">
+          <i class="fa-solid fa-list-ol"></i>
+          <span>字数总计 1712</span>
+        </span>
+
+        <span class="fk">|</span>
+
+        <span class="clock">
+           <i class="fa-regular fa-clock"></i>
+          <span>阅读时长 4分钟</span>
+        </span>
+
+        <span class="fk">|</span>
+
+        <span class="visit">
+          <i class="far fa-eye fa-fw"></i>
+          <span>阅读量 4043</span>
+        </span>
+
+        <span class="fk">|</span>
+
+        <span class="visit">
+          <i class="far fa-thumbs-up"></i>
+          点赞 <span id="thumbsupNum" th:text="${like_cnt}">1</span>
+        </span>
+
+      </div>
+    </div>
+  </div>
+</section>
+  </header>
+
+  
+  <main class="main flex animated fadeIn margin-0-auto aside-right"
+  >
+  <section class="container card ">
+    
+    <div class="post-outDate relative none animated fadeIn"
+         data-outDate="30"
+         data-publishTime="2021-11-22">
+    </div>
+
+    <article class="render-html  single_code_select line-numbers">
+      <div class="note yeee sd-yinhao" th:utext="${article.description}">阿里云（ECS/轻量）服务器和阿里云OSS地域必须一致</div>
+      <div th:utext="${article.contentHtml}"></div>
+<!--        <div class="note green sd-success">配置好重启  ./nginx -s reload</div>-->
+<!--        <blockquote>-->
+<!--          <p>域名/file/文件名 开始既可以访问对应oss的文件<br />-->
+<!--          <a href="https://dhjdd.cn/file/logo_1637031064675.png">https://dhjdd.cn/file/logo_1637031064675.png</a><br />-->
+<!--          <img src="https://dhjdd.cn/file/logo_1637031064675.png" alt="logo" /></p>-->
+<!--        </blockquote>-->
+<!--        <div class="note yellow">建议服务器带宽足够的情况下使用，也可以给你域名加cdn</div>-->
+    </article>
+
+    <div class="post-copyRight relative">
+      <i class="fa-solid fa-copyright absolute"></i>
+
+      <div class="author">
+        <span class="name">文章作者：</span>
+        <span class="text">小红</span>
+      </div>
+
+      <div class="url">
+        <span class="name">本文链接：</span>
+        <span class="text">
+              <a class="permalink" href="https://dhjdd.cn/archives/nginx%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86oss%E5%86%85%E7%BD%91%E9%80%94%E5%BE%84%E5%85%8D%E6%B5%81%E5%87%BA%E6%B5%81%E9%87%8F%E8%B4%B9" target="_blank">https://dhjdd.cn/archives/nginx%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86oss%E5%86%85%E7%BD%91%E9%80%94%E5%BE%84%E5%85%8D%E6%B5%81%E5%87%BA%E6%B5%81%E9%87%8F%E8%B4%B9</a>
+            </span>
+      </div>
+
+      <div class="declaration">
+        <span class="name">版权声明：</span>
+        <span class="text">本站所有文章除特别声明外，均采用 <a
+          class="link"
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 
+              <a class="link" href="/" target="_blank">小红</a>！</span>
+      </div>
+
+    </div>
+
+    <div class="post-abstract">
+      <span class="categories">
+            <a class="link inline-block text-center"
+               href="https://dhjdd.cn/categories/liunx"
+            >
+              <i class="fa-regular fa-folders"></i>
+              <span class="name">Linux</span>
+            </a><a class="link inline-block text-center"
+               href="https://dhjdd.cn/categories/%E5%B7%A5%E5%85%B7"
+            >
+              <i class="fa-regular fa-folders"></i>
+              <span class="name">工具</span>
+            </a>
+          </span>
+      <span class="tags">
+            <a class="link inline-block text-center"
+               href="https://dhjdd.cn/tags/webp"
+               style="--spec-color: null"
+            >
+              <i class="fa-regular fa-tags"></i>
+              <span class="name">webp</span>
+            </a><a class="link inline-block text-center"
+               href="https://dhjdd.cn/tags/%E9%98%BF%E9%87%8C%E4%BA%91"
+               style="--spec-color: null"
+            >
+              <i class="fa-regular fa-tags"></i>
+              <span class="name">阿里云</span>
+            </a><a class="link inline-block text-center"
+               href="https://dhjdd.cn/tags/oss"
+               style="--spec-color: null"
+            >
+              <i class="fa-regular fa-tags"></i>
+              <span class="name">oss</span>
+            </a><a class="link inline-block text-center"
+               href="https://dhjdd.cn/tags/nginx"
+               style="--spec-color: null"
+            >
+              <i class="fa-regular fa-tags"></i>
+              <span class="name">nginx</span>
+            </a>
+          </span>
+    </div>
+
+
+    <div class="post-support">
+      <div class="title text-center">喜欢就支持一下吧</div>
+
+      <div class="thumbsup" th:active="${is_like}"></div>
+<!--      <span class="thumbsupNum">1</span>-->
+
+      <div class="content flex flex-justify-content-center">
+
+        <div
+          class="share relative item cursor-pointer inline-flex flex-direction-column flex-justify-content-center  flex-align-items-center">
+          <i class="fa-light fa-arrow-up-right-from-square"></i>
+          <span>分享</span>
+          <ul class="share-dropdown absolute z-50">
+            <li class="dropdown-item">
+              <a
+                href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://dhjdd.cn/archives/nginx%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86oss%E5%86%85%E7%BD%91%E9%80%94%E5%BE%84%E5%85%8D%E6%B5%81%E5%87%BA%E6%B5%81%E9%87%8F%E8%B4%B9&amp;title=Nginx代理阿里云OSS免流&amp;pics=https://dhjdd.cn/file/oss_1637630302458.png&amp;summary=阿里云ECS/轻量服务器和阿里云OSS地域必须一致创建阿里云OSS和服务器的地域一致创建OSS图片处理样式 webp配置Ngxinlocation /file/ {    #防盗链    valid_referers none blocked dhjdd.cn;    if ($invalid_referer) {      return 404;    }     #匹配图片处理样式 webp ">
+              <span class="icon inline-flex flex-justify-content-center flex-align-items-center">
+                <i class="fa-regular fa-atom-simple"></i>
+              </span>
+                <span class="name">QQ空间</span>
+              </a>
+            </li>
+
+            <li class="dropdown-item">
+              <a
+                href="https://connect.qq.com/widget/shareqq/index.html?url=https://dhjdd.cn/archives/nginx%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86oss%E5%86%85%E7%BD%91%E9%80%94%E5%BE%84%E5%85%8D%E6%B5%81%E5%87%BA%E6%B5%81%E9%87%8F%E8%B4%B9&amp;title=Nginx代理阿里云OSS免流&amp;pics=https://dhjdd.cn/file/oss_1637630302458.png&amp;desc=阿里云ECS/轻量服务器和阿里云OSS地域必须一致创建阿里云OSS和服务器的地域一致创建OSS图片处理样式 webp配置Ngxinlocation /file/ {    #防盗链    valid_referers none blocked dhjdd.cn;    if ($invalid_referer) {      return 404;    }     #匹配图片处理样式 webp ">
+              <span class="icon inline-flex flex-justify-content-center flex-align-items-center">
+                 <i class="fa-brands fa-qq"></i>
+              </span>
+                <span class="name">QQ好友</span>
+              </a>
+            </li>
+
+            <li class="dropdown-item copy-permalink">
+              <span class="icon inline-flex flex-justify-content-center flex-align-items-center">
+               <i class="fa-regular fa-link"></i>
+              </span>
+              <span class="name">复制链接</span>
+            </li>
+          </ul>
+        </div>
+
+        
+      </div>
+    </div>
+
+
+    <div class="declaration">
+      <div id="comment">
+      </div>
+    </div>
+  </section>
+  <aside class="aside w-25">
+    <div class="sticky post-sticky">
+      <section class="aside-item card post-tocbot">
+        <h1 class="aside-title">
+          <i class="fas fa-stream"></i>
+          <span class="name">目录</span>
+        </h1>
+        <div class="toc"></div>
+      </section>
+
+      <section class="aside-news-post aside-item card">
+  <h1 class="aside-title">
+    <i class="fas fa-history"></i>
+    <span class="name">最新文章</span>
+  </h1>
+  <ul class="content">
+    <li class="item flex flex-align-items-center">
+      <a href="https://dhjdd.cn/archives/nginx%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86oss%E5%86%85%E7%BD%91%E9%80%94%E5%BE%84%E5%85%8D%E6%B5%81%E5%87%BA%E6%B5%81%E9%87%8F%E8%B4%B9" class="cover overflow-hidden">
+        <img class="block w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/oss_1637630302458.png "
+             alt="Nginx代理阿里云OSS免流" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </a>
+      <div class="desc flex-1">
+        <a href="https://dhjdd.cn/archives/nginx%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86oss%E5%86%85%E7%BD%91%E9%80%94%E5%BE%84%E5%85%8D%E6%B5%81%E5%87%BA%E6%B5%81%E9%87%8F%E8%B4%B9" class="title text-link text-clamp">Nginx代理阿里云OSS免流</a>
+        <time class="block"
+              datetime="2021-11-22T09:04:00Z">2021-11-22 17:04</time>
+      </div>
+    </li>
+    <li class="item flex flex-align-items-center">
+      <a href="https://dhjdd.cn/archives/liunx%E9%98%BF%E9%87%8C%E4%BA%91%E8%BD%BB%E9%87%8F%E6%9C%8D%E5%8A%A1%E5%99%A8465%E7%AB%AF%E5%8F%A3%E5%8F%91%E9%80%81%E9%82%AE%E7%AE%B1" class="cover overflow-hidden">
+        <img class="block w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/288378b785da4ad198d5f001880e4342_1631239120140.png "
+             alt="Liunx CentOS阿里云邮箱配置" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </a>
+      <div class="desc flex-1">
+        <a href="https://dhjdd.cn/archives/liunx%E9%98%BF%E9%87%8C%E4%BA%91%E8%BD%BB%E9%87%8F%E6%9C%8D%E5%8A%A1%E5%99%A8465%E7%AB%AF%E5%8F%A3%E5%8F%91%E9%80%81%E9%82%AE%E7%AE%B1" class="title text-link text-clamp">Liunx CentOS阿里云邮箱配置</a>
+        <time class="block"
+              datetime="2021-08-12T01:22:00Z">2021-08-12 09:22</time>
+      </div>
+    </li>
+    <li class="item flex flex-align-items-center">
+      <a href="https://dhjdd.cn/archives/liunx%E6%AF%8F%E5%A4%A9%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0git" class="cover overflow-hidden">
+        <img class="block w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/257_1642871715827.png "
+             alt="Liunx 定时备份博客数据Git" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </a>
+      <div class="desc flex-1">
+        <a href="https://dhjdd.cn/archives/liunx%E6%AF%8F%E5%A4%A9%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%88%B0git" class="title text-link text-clamp">Liunx 定时备份博客数据Git</a>
+        <time class="block"
+              datetime="2021-08-08T09:24:00Z">2021-08-08 17:24</time>
+      </div>
+    </li>
+    <li class="item flex flex-align-items-center">
+      <a href="https://dhjdd.cn/archives/momentdayjs%E8%8E%B7%E5%8F%96%E5%B8%B8%E7%94%A8%E6%97%B6%E9%97%B4" class="cover overflow-hidden">
+        <img class="block w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/moment_day_1637215247699.png "
+             alt="moment、dayjs获取常用时间" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </a>
+      <div class="desc flex-1">
+        <a href="https://dhjdd.cn/archives/momentdayjs%E8%8E%B7%E5%8F%96%E5%B8%B8%E7%94%A8%E6%97%B6%E9%97%B4" class="title text-link text-clamp">moment、dayjs获取常用时间</a>
+        <time class="block"
+              datetime="2021-09-28T02:34:02.322Z">2021-09-28 10:34</time>
+      </div>
+    </li>
+    <li class="item flex flex-align-items-center">
+      <a href="https://dhjdd.cn/archives/2021-09-26-14-27-15" class="cover overflow-hidden">
+        <img class="block w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/fr_docker_1632639229628.jpg "
+             alt="Docker个人常用命令" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </a>
+      <div class="desc flex-1">
+        <a href="https://dhjdd.cn/archives/2021-09-26-14-27-15" class="title text-link text-clamp">Docker个人常用命令</a>
+        <time class="block"
+              datetime="2021-07-20T06:27:15Z">2021-07-20 14:27</time>
+      </div>
+    </li>
+    <li class="item flex flex-align-items-center">
+      <a href="https://dhjdd.cn/archives/vue%E4%B8%ADkey%E4%B8%8D%E8%83%BD%E7%94%A8index" class="cover overflow-hidden">
+        <img class="block w-100 h-100"
+             src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
+             data-lazy-src="https://dhjdd.cn/file/3a884ab2d57d41229faaa74aee5554a9_1640244957936.jpg "
+             alt="vue中key不能用index" onerror="this.src=`https://dhjdd.cn/upload/404.gif`">
+      </a>
+      <div class="desc flex-1">
+        <a href="https://dhjdd.cn/archives/vue%E4%B8%ADkey%E4%B8%8D%E8%83%BD%E7%94%A8index" class="title text-link text-clamp">vue中key不能用index</a>
+        <time class="block"
+              datetime="2021-07-15T09:07:07Z">2021-07-15 17:07</time>
+      </div>
+    </li>
+  </ul>
+</section>
+    </div>
+  </aside>
+</main>
+  
+  <footer class="footer text-center">
+    <div class="copyright">© 2020 - 2023 By 小红</div>
+    <div class="icp">
+      <a href="https://beian.miit.gov.cn/?token=0a8070f6-065c-4796-89be-75528400a7a4#/Integrated/index">备案号：蜀ICP备20013557号-2</a>
+    </div>
+    
+    <div>本站点由<img src="https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png" alt="阿里云logo"  style="width: 65px;margin: 0 5px;    transform: translateY(-2px);">云服务商 提供云服务</div>
+    <div class="powered">Powered by&nbsp;<a class="halo" href="https://halo.run/" target="_blank">Halo</a>&nbsp;|&nbsp;🌈
+      Theme by&nbsp;<a class="theme" title="当前主题：Butterfly" href="https://github.com/dhjddcn/halo-theme-butterfly"
+                       target="_blank">小红</a></div>
+  </footer>
+  
+  <div class="adsorption z-80 fixed">
+    <button class="show-tocbot btn-effect text-center none" type="button" title="目录">
+      <i class="fas fa-list-ul"></i>
+    </button>
+
+    <button class="switch-model block btn-effect text-center" type="button" title="浅色和深色模式转换">
+      <i class="fas fa-adjust"></i>
+    </button>
+
+    <button class="back-top  block btn-effect text-center" type="button" title="回到顶部">
+      <i class="fa-solid fa-up"></i>
+    </button>
+  </div>
+
+  
+  <div class="global-mask fixed w-100 z-100 h-100 left-0 top-0 none"></div>
+</div>
+<script type="text/javascript" th:src="@{/plugins/prism/prism.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/lazyLoad/lazyLoad.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/universe/universe.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/Qmsg/Qmsg.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/global.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/plugins/fancybox/fancybox.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/clipboard/clipboard.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/tocbot/tocbot.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/post.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/plugins/busuanzi/busuanzi.pure.mini.js}"></script>
+<script id="post-script">
+  window.PageConfig = {
+    code:{"realNode":{"enable_line":true,"enable":true,"enable_expander":true,"theme_dark":"one-dark","enable_title":true,"theme_light":"one-light","enable_hr":true,"enable_copy":true}},
+    post:{"realNode":{"enable_above":true,"out_date":30,"enable_h_title":true,"enable_reward":true,"reward":[{"name":"\u5FAE\u4FE1"},{"name":"\u652F\u4ED8\u5B9D"}],"slots":{}}},
+  };
+  document.getElementById('post-script').remove();
+</script>
+
+<script type="text/javascript">
+  //注意：接收JSON数据，必须用ajax方法，不能用get/post（默认接收文本数据）
+  // function load(){
+  //   var articleId = [[${article.id}]];
+  //   $.ajax({
+  //     url:"http://localhost:8080/blog/likeNum",
+  //     data:"articleId="+articleId,//存入request域，servlet通过req.getParameter获取
+  //     type:"post",
+  //     dataType:"JSON",
+  //     success:function (result) {
+  //       //服务器传来的result是JSON数据，该数据由Article对象转换而来
+  //       document.getElementById("thumbsupNum").innerHTML = result.likeCnt;
+  //     }
+  //   })
+  // }
+  function load(){
+    // 初始状态
+    var status = $(".thumbsup").attr("active")
+    if(status == "false"){
+      $(".thumbsup").css("background-position","left");
+    }else{
+      $(".thumbsup").css("background-position","right");
+    }
+  }
+  //如果用户点击”赞“
+  var ifCancelThumbsup;
+  var articleId = [[${article.id}]];
+  $(".thumbsup").click(function () {
+    // alert($(".thumbsup").attr("active"));
+    if($(".thumbsup").attr("active")=="false"){
+      //改状态
+      $(".thumbsup").css("background-position","right");
+      //点赞次数+1
+      //var num = $(".thumbsupNum").text();
+      //$(".thumbsupNum").text(Number(num)+1);
+      //改变active属性的值
+      $(".thumbsup").attr("active","true")
+
+      ifCancelThumbsup = "false";
+    }else if($(".thumbsup").attr("active")=="true"){
+      //改状态
+      $(".thumbsup").css("background-position","left");
+      //点赞次数+1
+      //var num = $(".thumbsupNum").text();
+      //$(".thumbsupNum").text(Number(num)-1);
+      //改变active属性的值
+      $(".thumbsup").attr("active","false")
+
+      ifCancelThumbsup = "true";
+    }
+    //改变数据库中的数据
+    $.ajax({
+      url:"http://localhost:8080/blog/toClickThumbsup",
+      data:"ifCancelThumbsup="+ifCancelThumbsup+"&articleId="+articleId,//存入request域，servlet通过req.getParameter获取
+      type:"post",
+      dataType:"JSON",
+      success:function (result) {
+        //服务器传来的result是JSON数据，该数据由Article对象转换而来
+        document.getElementById("thumbsupNum").innerHTML = result.likeCnt;
+      }
+    })
+  })
+
+</script>
+
+</body>
+</html>

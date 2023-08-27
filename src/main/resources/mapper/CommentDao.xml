@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcl.blog.dao.CommentDao">
+    <resultMap id="article" type="com.hcl.blog.entity.Comment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="replyObject" column="reply_object"/>
+        <result property="replyId" column="reply_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="countComments" resultType="java.lang.Long">
+        select count(*) from comment
+    </select>
+
+
+</mapper>

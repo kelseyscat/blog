@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>Annex - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta content="Admin Dashboard" name="description" />
+        <meta content="Mannatthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <link rel="shortcut icon" th:href="@{/assets/images/favicon.ico}">
+
+        <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css">
+		<link th:href="@{/assets/css/hcl.css}" rel="stylesheet" type="text/css">
+		<link th:href="@{/editormd/css/editormd.min.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/webjars/layui/2.7.6/dist/css/layui.css}" rel="stylesheet" type="text/css">
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
+                    <i class="ion-close"></i>
+                </button>
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <a href="index.html" class="logo"><i class="mdi mdi-assistant"></i> Annex</a>
+                        <!-- <a href="index.html" class="logo"><img src="assets/images/logo.png" height="24" alt="logo"></a> -->
+                    </div>
+                </div>
+
+                <div class="sidebar-inner slimscrollleft">
+
+                    <div id="sidebar-menu">
+                        <ul>
+
+                            <li>
+                                <a th:href="@{/dashboard}" class="waves-effect"><i class="mdi mdi-airplay"></i><span> Dashboard</span></a>
+                            </li>
+							<li>
+                                <a th:href="@{/article}" class="waves-effect"><i class="mdi mdi-biohazard"></i><span> Article list </span></a>
+                            </li>  
+							<li class="nav-active">
+                                <a th:href="@{/write}" class="waves-effect"><i class="mdi mdi-chart-areaspline"></i><span> write + </span></a>
+                            </li>
+                            <li>
+                                <a href="setting.html" class="waves-effect"><i class="mdi mdi-settings"></i><span> Settings </span></a>
+                            </li>                            
+                            <li>
+                                <a th:href="@{/}" class="waves-effect"><i class="mdi mdi-power"></i><span> Logout </span></a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div> <!-- end sidebarinner -->
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <!-- Top Bar Start -->
+                    <div class="topbar">
+
+                        <nav class="navbar-custom">
+
+                            <ul class="list-inline float-right mb-0">
+                                <!-- language-->
+                                <li class="list-inline-item dropdown notification-list hide-phone">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect text-white" data-toggle="dropdown" href="#" role="button"
+                                        aria-haspopup="false" aria-expanded="false">
+                                        English <img src="assets/images/flags/us_flag.jpg" class="ml-2" height="16" alt=""/>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right language-switch">
+                                        <a class="dropdown-item" href="#"><img src="assets/images/flags/italy_flag.jpg" alt="" height="16"/><span> Italian </span></a>
+                                        <a class="dropdown-item" href="#"><img src="assets/images/flags/french_flag.jpg" alt="" height="16"/><span> French </span></a>
+                                        <a class="dropdown-item" href="#"><img src="assets/images/flags/spain_flag.jpg" alt="" height="16"/><span> Spanish </span></a>
+                                        <a class="dropdown-item" href="#"><img src="assets/images/flags/russia_flag.jpg" alt="" height="16"/><span> Russian </span></a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                       aria-haspopup="false" aria-expanded="false">
+                                        <i class="ti-email noti-icon"></i>
+                                        <span class="badge badge-danger noti-icon-badge">5</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
+                                        <!-- item-->
+                                        <div class="dropdown-item noti-title">
+                                            <h5><span class="badge badge-danger float-right">745</span>Messages</h5>
+                                        </div>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon"><img src="assets/images/users/avatar-2.jpg" alt="user-img" class="img-fluid rounded-circle" /> </div>
+                                            <p class="notify-details"><b>Charles M. Jones</b><small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon"><img src="assets/images/users/avatar-3.jpg" alt="user-img" class="img-fluid rounded-circle" /> </div>
+                                            <p class="notify-details"><b>Thomas J. Mimms</b><small class="text-muted">You have 87 unread messages</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon"><img src="assets/images/users/avatar-4.jpg" alt="user-img" class="img-fluid rounded-circle" /> </div>
+                                            <p class="notify-details"><b>Luis M. Konrad</b><small class="text-muted">It is a long established fact that a reader will</small></p>
+                                        </a>
+
+                                        <!-- All-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            View All
+                                        </a>
+
+                                    </div>
+                                </li>
+
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                       aria-haspopup="false" aria-expanded="false">
+                                        <i class="ti-bell noti-icon"></i>
+                                        <span class="badge badge-success noti-icon-badge">23</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
+                                        <!-- item-->
+                                        <div class="dropdown-item noti-title">
+                                            <h5><span class="badge badge-danger float-right">87</span>Notification</h5>
+                                        </div>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
+                                            <p class="notify-details"><b>Your order is placed</b><small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-success"><i class="mdi mdi-message"></i></div>
+                                            <p class="notify-details"><b>New Message received</b><small class="text-muted">You have 87 unread messages</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-warning"><i class="mdi mdi-martini"></i></div>
+                                            <p class="notify-details"><b>Your item is shipped</b><small class="text-muted">It is a long established fact that a reader will</small></p>
+                                        </a>
+
+                                        <!-- All-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            View All
+                                        </a>
+
+                                    </div>
+                                </li>
+
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
+                                       aria-haspopup="false" aria-expanded="false">
+                                        <img th:src="@{/assets/images/users/avatar-1.jpg}" alt="user" class="rounded-circle">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                        <!-- item-->
+                                        <div class="dropdown-item noti-title">
+                                            <h5>Welcome</h5>
+                                        </div>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5 text-muted"></i> My Wallet</a>
+                                        <a class="dropdown-item" href="#"><span class="badge badge-success float-right">5</span><i class="mdi mdi-settings m-r-5 text-muted"></i> Settings</a>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5 text-muted"></i> Lock screen</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                            <ul class="list-inline menu-left mb-0">
+                                <li class="float-left">
+                                    <button class="button-menu-mobile open-left waves-light waves-effect">
+                                        <i class="mdi mdi-menu"></i>
+                                    </button>
+                                </li>
+                                <li class="hide-phone app-search">
+                                    <form role="search" class="">
+                                        <input type="text" placeholder="Search..." class="form-control">
+                                        <a href=""><i class="fa fa-search"></i></a>
+                                    </form>
+                                </li>
+                            </ul>
+
+                            <div class="clearfix"></div>
+
+                        </nav>
+
+                    </div>
+                    <!-- Top Bar End -->
+
+                    <div class="page-content-wrapper ">
+
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">Annex</a></li>
+                                                <li class="breadcrumb-item active"> write</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Article</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <form class="form-horizontal" role="form" th:action="@{write/newarticle}">
+                                <div class="card-body">
+                                    <div class="form-group mb-0 row">
+                                        <div class="col-md-12">
+                                            <div class="mt-3">
+                                                <div class="btn-group float-left">
+                                                    <button id="bt1" name="bt1" type="button" class="hcl_btn">保存草稿</button>
+                                                    <button id="bt2" name="bt2" type="button" class="hcl_btn_1">预览</button>
+                                                    <button id="bt3" name="bt3" type="submit" class="hcl_btn_2">发布</button>
+                                                    <select class="hcl_btn_4" name="type" id="type">
+                                                        <option value="default">default</option>
+                                                        <option th:each="t:${Types}" th:value="${t}" th:text="${t}">default</option>
+                                                        <option><a href="#">Add new (+)</a></option>
+                                                    </select>
+                                                    <button type="button" id="upload" class="hcl_btn_3">添加封面图片</button>
+                                                    <p id="demoText"></p>
+                                                </div>
+                                                <div class="btn-group float-right">
+                                                    <div class="hcl_label">
+                                                        <img th:src="@{/assets/images/add.png}" alt="" style="height: 28px;" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="input-group mt-3 float-left">
+                                                <input type="text" id="title" name="title" class="form-control" style="margin-right: 12px;" placeholder="请输入标题" aria-label="123" aria-describedby="basic-addon1" th:value="${article!=null ? article.title:''}">
+                                                <input type="text" id="description" name="description" class="form-control" placeholder="请简单描述" aria-label="123" aria-describedby="basic-addon1" th:value="${article!=null ? article.description:''}">
+                                            </div>
+                                        </div>
+
+                                    </div> <!--end row-->
+                                </div>
+
+                                <!-- end page title end breadcrumb -->
+                                <div class="row">
+                                     <!--z-index: number ：设置元素的堆叠顺序，number大的排在前面-->
+                                     <div id="md-content" style="z-index: 1 !important">
+                                         <textarea id="editormd" name="editormd" placeholder="博客内容" style="display: none" th:text="${article!=null ? article.content:''}"></textarea>
+                                     </div>
+                                </div> <!-- end row -->
+                            </form>
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->   
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    © 本博客由chenluh本人开发
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script th:src="@{/assets/js/jquery.min.js}"></script>
+        <script th:src="@{/assets/js/popper.min.js}"></script>
+        <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+        <script th:src="@{/assets/js/modernizr.min.js}"></script>
+        <script th:src="@{/assets/js/detect.js}"></script>
+        <script th:src="@{/assets/js/fastclick.js}"></script>
+        <script th:src="@{/assets/js/jquery.slimscroll.js}"></script>
+        <script th:src="@{/assets/js/jquery.blockUI.js}"></script>
+        <script th:src="@{/assets/js/waves.js}"></script>
+        <script th:src="@{/assets/js/jquery.nicescroll.js}"></script>
+        <script th:src="@{/assets/js/jquery.scrollTo.min.js}"></script>
+
+        <!-- App js -->
+        <script th:src="@{/assets/js/app.js}"></script>
+		
+		<!-- <script src="editormd/editormd.min.js"></script> -->
+		<script th:src="@{/editormd/editormd.js}"></script>
+
+        <script th:src="@{/webjars/layui/2.7.6/dist/layui.js}"></script>
+		
+		<script type="text/javascript" th:inline="javascript">
+			// 初始化markdown编辑器
+			var contentEditor
+			$(function() {
+				//md-content必须和页面区域的最外层div的id相同
+				contentEditor = editormd("md-content", {
+					// 在页面显示的宽度
+					width : "95%",
+					height : 680,
+					// 单滚动条
+					syncScrolling : "single",
+					// lib资源的路径
+					path : /*[[@{/editormd/lib/}]]*/ "../../static/editormd/lib/",
+					// 自定义的增强配置！
+					saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+					emoji: true, // 开启表情的功能！ 图片的本地配置！
+					// theme: "light",//工具栏主题
+					// previewTheme: "dark",//预览主题
+					// editorTheme: "pastel-on-dark",//编辑主题
+					// markdown的配置！
+					tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+					flowChart : true,             // 开启流程图支持，默认关闭
+					sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+					//图片上传
+					imageUpload : true,
+					imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+					imageUploadURL : "/editormd/file/upload", // 文件上传的处理请求！
+					onload : function() {
+						console.log('onload', this);
+					},
+                    /*指定需要显示的功能按钮*/
+                    toolbarIcons : function() {
+                        return ["undo","redo","|",
+                            "bold","del","italic","quote","ucwords","uppercase","lowercase","|",
+                            "h1","h2","h3","h4","h5","h6","|",
+                            "list-ul","list-ol","hr","|",
+                            "link","reference-link","image","code","preformatted-text",
+                            "code-block","table","datetime","emoji","html-entities","pagebreak","|",
+                            "goto-line","watch","preview","fullscreen","clear","search","|",
+                            "help","info","releaseIcon", "index"]
+                    },
+
+                    /*自定义功能按钮，下面我自定义了2个，一个是发布，一个是返回首页*/
+                    toolbarIconTexts : {
+                        releaseIcon : "<span bgcolor=\"gray\">发布</span>",
+                        index : "<span bgcolor=\"red\">返回首页</span>",
+                    },
+
+					/*给自定义按钮指定回调函数*/
+					toolbarHandlers:{
+						releaseIcon : function(cm, icon, cursor, selection) {
+							//表单提交
+							mdEditorForm.method = "post";
+							mdEditorForm.action = "/article/addArticle";//提交至服务器的路径
+							mdEditorForm.submit();
+						},
+						index : function(){
+							window.location.href = '/';
+						},
+					}
+						
+				});
+			});
+
+            layui.use('upload', function () {
+                var upload = layui.upload
+                //上传图片
+                var uploadInst = upload.render({
+                    elem: '#upload',
+                    url: 'write/uploadCoverImg',
+                    method: 'POST'
+                    , done: function (res) {
+                        //上传成功
+                        var demoText = $('#demoText');
+                        demoText.html('<span style="color: gray;">上传成功！</span>');
+                    }
+                    , error: function () {
+                        //演示失败状态，并实现重传
+                        var demoText = $('#demoText');
+                        demoText.html('<span style="color: orange;">上传失败</span><a class="layui-btn layui-btn-xs demo-reload" style="color: white; ">重试</a>');
+                        demoText.find('.demo-reload').on('click', function () {
+                            uploadInst.upload();
+                        });
+                    }
+                });
+            });
+
+		</script>
+
+    </body>
+</html>

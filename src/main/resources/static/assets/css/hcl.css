@@ -1,0 +1,148 @@
+ .hcl_content {
+    width: 130px;
+    /* 强制不换行 */
+    white-space: nowrap;
+    /* 文字用省略号代替超出的部分 */
+    text-overflow: ellipsis;
+    /* 匀速溢出内容，隐藏 */
+    overflow: hidden;   
+  }
+
+ .text_backgroud {
+    width: auto;
+	display: inline-block;
+	white-space: nowrap;
+    font-size: 16px; 
+	color: #FFF; 
+	background: #FF8C00;  
+	opacity: 0.5;
+	border-radius: 10px;
+	text-align: center;
+  }
+ 
+ .comment_backgroud {
+    width: auto;
+	display: inline-block;
+	white-space: nowrap;
+    font-size: 16px; 
+	color: #FFF; 
+	background: #87CEFA;  
+	opacity: 0.5;
+	border-radius: 10px;
+	text-align: center;
+  }
+  
+ .category_backgroud {
+    width: auto;
+	display: inline-block;
+	white-space: nowrap;
+    font-size: 16px; 
+	color: CornflowerBlue; 
+	background: AliceBlue;  
+	opacity: 0.5;
+	border-radius: 10px;
+	text-align: center;
+	margin:2px 0;
+	border: 2px solid CornflowerBlue;
+  }
+
+ #submit_button{
+	display:block;
+	margin-left: 42%;
+	margin-top: 2em;
+	margin-bottom: 2em;
+ }
+ 
+ .input{
+	display: block;
+	margin-left: 20%;
+ }
+ 
+ .hcl_btn{
+	margin-right: 8px;
+	background: #ED7387;
+	opacity: 0.6;
+	color: white;
+	display: inline-block;
+	border-radius: .5em;
+	border: 0; 
+	width: 100px;
+	height: 30px;
+ }
+ 
+  .hcl_btn_1{
+	margin-right: 8px;
+	background: gray;
+	opacity: 0.6;
+	color: white;
+	display: inline-block;
+	border-radius: .5em;
+	border: 0; 
+	width: 50px;
+	height: 30px;
+ }
+ 
+  .hcl_btn_2{
+	margin-right: 8px;
+	background: #60BAA7;
+	opacity: 0.6;
+	color: white;
+	display: inline-block;
+	border-radius: .5em;
+	border: 0; 
+	width: 50px;
+	height: 30px;
+ }
+
+ .hcl_btn_3{
+	 margin-right: 8px;
+	 border-style: dashed;
+	 border-color: gray;
+	 display: inline-block;
+	 color: gray;
+	 border-radius: .5em;
+	 width: 150px;
+	 height: 30px;
+ }
+
+ .hcl_btn_4{
+	 margin-right: 8px;
+	 background: #7987EB;
+	 opacity: 0.6;
+	 color: white;
+	 display: inline-block;
+	 border-radius: .5em;
+	 border: 0;
+	 width: 100px;
+	 height: 30px;
+ }
+
+ .hcl_cover_page{
+	 margin-right: 8px;
+	 border-style: dashed;
+	 border-color: gray;
+	 text-align: center;
+	 line-height: 80px;
+	 color: gray;
+	 border-radius: .5em;
+	 width: 200px;
+	 height: 80px;
+ }
+
+ .hcl_label{
+	 margin-left: 12px;
+	 opacity: 0.6;
+	 color: gray;
+	 text-align: center;
+	 border-style: dashed;
+	 border-color: gray;
+	 border-radius: .5em;
+	 width: 60px;
+	 height: 35px;
+ }
+ .hcl_pages{
+	 position: absolute;
+	 left: 50%;
+	 opacity: 0.7;
+	 border-radius: .5em;
+ }

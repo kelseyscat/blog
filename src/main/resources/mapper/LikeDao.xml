@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcl.blog.dao.LikeDao">
+    <insert id="save" parameterType="com.hcl.blog.entity.Like">
+        insert into like_article(ip, article_id, status)
+        values (#{userLike.ip}, #{userLike.articleId}, #{userLike.status})
+        ON DUPLICATE KEY UPDATE status = #{userLike.status};
+    </insert>
+
+    <select id="findByArticleIdAndStatus" resultType="com.hcl.blog.entity.Like">
+        select * from like_article where article_id = #{articleId} and status = #{status}
+    </select>
+
+    <select id="findByIpAndStatus" resultType="com.hcl.blog.entity.Like">
+        select * from like_article where ip = #{ip} and status = #{status}
+    </select>
+
+    <select id="findByArticleAndIp" resultType="com.hcl.blog.entity.Like">
+        select * from like_article where article_id = #{articleId} and ip = #{ip}
+    </select>
+
+
+</mapper>

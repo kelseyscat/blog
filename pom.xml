@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.hcl</groupId>
+	<artifactId>blog</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>blog</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>6.0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.16</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!--Redis配置-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+
+		<!--mybatis分页插件-->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+		<!--layui用于上传图片-->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>layui</artifactId>
+			<version>2.7.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20230618</version>
+		</dependency>
+
+		<!--引入Markdown转HTML的插件-->
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>0.17.0</version>
+		</dependency>
+
+		<!--扩展 标题-->
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark-ext-heading-anchor</artifactId>
+			<version>0.17.0</version>
+		</dependency>
+
+		<!--扩展 表格-->
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark-ext-gfm-tables</artifactId>
+			<version>0.17.0</version>
+		</dependency>
+
+		<!--分页插件-->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>5.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+		<!--ES-->
+		<dependency>
+			<groupId>co.elastic.clients</groupId>
+			<artifactId>elasticsearch-java</artifactId>
+			<version>8.8.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>8.8.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.json</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.12.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.fastjson2</groupId>
+			<artifactId>fastjson2</artifactId>
+			<version>2.0.35</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+			<version>5.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!--Kafka-->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>3.0.9</version>
+		</dependency>
+
+		<!--qiniu pic upload-->
+		<dependency>
+			<groupId>com.qiniu</groupId>
+			<artifactId>qiniu-java-sdk</artifactId>
+			<version>7.14.0</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>
